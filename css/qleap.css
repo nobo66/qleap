@@ -3,14 +3,32 @@
  * Author: Julien Wintz
  * Created: Tue Feb 19 13:54:23 2013 (+0100)
  * Version: 
- * Last-Updated: Tue Feb 19 14:35:15 2013 (+0100)
+ * Last-Updated: Wed Feb 20 17:06:26 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 30
+ *     Update #: 127
  */
 
 /* Change Log:
  * 
  */
+
+/* ****************************************************************
+ * Font setup
+ * **************************************************************** */
+
+@font-face {
+    font-family: 'BLOKKNeue-Regular';
+    src: url('../font/BLOKKNeue-Regular.eot');
+    src: url('../font/BLOKKNeue-Regular.eot?#iefix') format('embedded-opentype'),
+         url('../font/BLOKKNeue-Regular.woff') format('woff'),
+         url('../font/BLOKKNeue-Regular.svg#BLOKKNeue-Regular') format('svg');
+    font-weight: light;
+    font-style: normal;
+}
+
+/* ****************************************************************
+ * Regular
+ * **************************************************************** */
 
 body {
   padding-top: 20px;
@@ -20,6 +38,12 @@ body {
 /* ****************************************************************
  * Bootstrap Additions
  * **************************************************************** */
+
+.blokk {
+  color: gray;
+  font-family: "BLOKKNeue-Regular", serif;
+  text-align: justify;
+}
 
 .container-narrow {
   margin: 0 auto;
@@ -32,7 +56,7 @@ body {
 
 .jumbotron {
   margin: 60px 0;
-  text-align: center;
+  text-align: left;
 }
 
 .jumbotron h1 {
@@ -43,6 +67,36 @@ body {
 .jumbotron .btn {
   font-size: 21px;
   padding: 14px 24px;
+}
+
+.subnav-fixed {
+  position: fixed;
+
+  top: 0px;
+  left: 0px;
+  right: 0px;
+
+  background-color: rgba(255, 255, 255, 0.8);
+
+  border-color: #d5d5d5;
+  border-width: 0 0 1px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+
+  -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+     -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+          box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.subnav-fixed > ul {
+  padding-top: 15px;
 }
 
 /* ****************************************************************
@@ -56,6 +110,23 @@ hr {
     background-image:    -moz-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
     background-image:     -ms-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
     background-image:      -o-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
+}
+
+.btn-group {
+  align: left;
+}
+
+.muted {
+  text-shadow: 0px 2px 3px #ccc;
+}
+
+.muted > a,
+.muted > a:link,
+.muted > a:visited,
+.muted > a:hover,
+.muted > a:active {
+  color: #859821;
+  text-decoration: none;
 }
 
 .nav > li > a {
