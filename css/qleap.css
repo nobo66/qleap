@@ -1,0 +1,76 @@
+/* qleap.css --- 
+ * 
+ * Author: Julien Wintz
+ * Created: Tue Feb 19 13:54:23 2013 (+0100)
+ * Version: 
+ * Last-Updated: Tue Feb 19 14:35:15 2013 (+0100)
+ *           By: Julien Wintz
+ *     Update #: 30
+ */
+
+/* Change Log:
+ * 
+ */
+
+body {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* ****************************************************************
+ * Bootstrap Additions
+ * **************************************************************** */
+
+.container-narrow {
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+.jumbotron {
+  margin: 60px 0;
+  text-align: center;
+}
+
+.jumbotron h1 {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* ****************************************************************
+ * Bootstrap overload
+ * **************************************************************** */
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
+    background-image:    -moz-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
+    background-image:     -ms-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
+    background-image:      -o-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
+}
+
+.nav > li > a {
+  color: #494949;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  color: #859821;
+  background-color: #ffffff;
+}
+
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus {
+  color: #ffffff;
+  background-color: #859821;
+}
