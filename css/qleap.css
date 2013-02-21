@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Tue Feb 19 13:54:23 2013 (+0100)
  * Version: 
- * Last-Updated: Thu Feb 21 10:35:10 2013 (+0100)
+ * Last-Updated: Thu Feb 21 11:03:08 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 164
+ *     Update #: 169
  */
 
 /* Change Log:
@@ -175,7 +175,7 @@ pre {
 }
 
 .muted {
-  text-shadow: 0px 2px 3px #ccc;
+  text-shadow: 0px 2px 2px #dddddd;
 }
 
 .muted > a,
