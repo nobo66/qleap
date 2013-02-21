@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Thu Feb 21 13:38:03 2013 (+0100)
  * Version: 
- * Last-Updated: Thu Feb 21 13:49:40 2013 (+0100)
+ * Last-Updated: Thu Feb 21 14:40:33 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 28
+ *     Update #: 29
  */
 
 /* Change Log:
@@ -27,7 +27,7 @@ private slots:
     void init(void);
 
 private slots:
-    void testMapper(void);
+    void testMapToScreen(void);
 
 private slots:
     void cleanup(void);

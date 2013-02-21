@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Thu Feb 21 13:41:59 2013 (+0100)
  * Version: 
- * Last-Updated: Thu Feb 21 13:48:30 2013 (+0100)
+ * Last-Updated: Thu Feb 21 15:48:51 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 24
+ *     Update #: 107
  */
 
 /* Change Log:
@@ -13,10 +13,18 @@
  */
 
 #include "QLeapMapperTest.h"
+#include "QLeapMapperTest_p.h"
+
+#include <QLeapGui/QLeap>
+#include <QLeapGui/QLeapMapper>
+
+// ///////////////////////////////////////////////////////////////////
+// QLeapMapperTestCase
+// ///////////////////////////////////////////////////////////////////
 
 void QLeapMapperTestCase::initTestCase(void)
 {
-
+    Q_ASSERT(qLeap);
 }
 
 void QLeapMapperTestCase::init(void)
@@ -24,9 +32,11 @@ void QLeapMapperTestCase::init(void)
 
 }
 
-void QLeapMapperTestCase::testMapper(void)
+void QLeapMapperTestCase::testMapToScreen(void)
 {
-    QVERIFY(1 == 1);
+    QLeapMapperTestScreenHelper helper;
+
+    QVERIFY(!helper.exec());
 }
 
 void QLeapMapperTestCase::cleanup(void)
@@ -56,3 +66,31 @@ void QLeapMapperTestCase::cleanupTestCase(void)
 // ///////////////////////////////////////////////////////////////////
 
 QLEAP_TEST_MAIN(QLeapMapperTest, QLeapMapperTestCase)
+
+// ///////////////////////////////////////////////////////////////////
+// QLeapMapperTestScreenHelper
+// ///////////////////////////////////////////////////////////////////
+
+int QLeapMapperTestScreenHelper::exec(void)
+{
+    QFont font;
+    font.setFamily("Menlo");
+    font.setPointSize(256);
+
+    QLabel label("Touch me");
+    label.setFont(font);
+    label.show();
+
+    QEventLoop loop;
+
+    connect(this, SIGNAL(done()), &loop, SLOT(quit()));
+    
+    return loop.exec();
+}
+
+bool QLeapMapperTestScreenHelper::event(QEvent *event)
+{
+    qDebug() << event;
+
+    return QObject::event(event);
+}
