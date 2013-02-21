@@ -1,4 +1,4 @@
 qleap
 =====
 
-Qt bindings for leap motion device
+Qt bindings for leap motion device.
