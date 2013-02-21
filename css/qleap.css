@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Tue Feb 19 13:54:23 2013 (+0100)
  * Version: 
- * Last-Updated: Wed Feb 20 17:06:26 2013 (+0100)
+ * Last-Updated: Thu Feb 21 00:57:13 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 127
+ *     Update #: 153
  */
 
 /* Change Log:
@@ -76,6 +76,8 @@ body {
   left: 0px;
   right: 0px;
 
+  z-index: 1024;
+
   background-color: rgba(255, 255, 255, 0.8);
 
   border-color: #d5d5d5;
@@ -99,6 +101,45 @@ body {
   padding-top: 15px;
 }
 
+.bs-docs-example {
+  position: relative;
+  margin: 15px 0;
+  padding: 39px 19px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.bs-docs-example::after {
+  content: "Example";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+  -moz-border-radius: 4px 0 4px 0;
+  border-radius: 4px 0 4px 0;
+}
+
+.bs-docs-example + .prettyprint {
+  margin-top: -20px;
+  padding-top: 15px;
+}
+
+.gravatar img {
+  border: 1px solid #888;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
 /* ****************************************************************
  * Bootstrap overload
  * **************************************************************** */
@@ -110,6 +151,14 @@ hr {
     background-image:    -moz-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
     background-image:     -ms-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
     background-image:      -o-linear-gradient(left, rgba(216, 216, 216, 0), rgba(216, 216, 216, 0.75), rgba(216, 216, 216, 0));
+}
+
+code, pre {
+  font-family: Menlo;
+}
+
+pre {
+  font-size: 12px;
 }
 
 .btn-group {
@@ -136,7 +185,7 @@ hr {
 .nav > li > a:hover,
 .nav > li > a:focus {
   color: #859821;
-  background-color: #ffffff;
+  background-color: transparent;
 }
 
 .nav-pills > .active > a,
@@ -144,4 +193,8 @@ hr {
 .nav-pills > .active > a:focus {
   color: #ffffff;
   background-color: #859821;
+}
+
+.row-fluid > p {
+  text-align: justify;
 }

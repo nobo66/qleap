@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
   <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -16,6 +17,7 @@
 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/prettify.css" rel="stylesheet">
     <link href="css/font-awesome.css" rel="stylesheet">
     <link href="css/qleap.css" rel="stylesheet">
 
@@ -34,7 +36,7 @@
   <!-- !! Body
   <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
-  <body data-spy="scroll" data-target=".subnav" data-offset="50" data-twttr-rendered="true" id="home">
+  <body data-spy="scroll" data-target=".subnav" data-offset="150" data-twttr-rendered="true" id="home" onload="prettyPrint()">
 
     <a href="https://github.com/jwintz" class="formke">
       <img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme_right_gray.png" alt="Fork me on GitHub">
@@ -48,6 +50,7 @@
         <div class="subnav">
           <ul class="nav nav-pills pull-right">
             <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -58,26 +61,75 @@
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
       <div class="jumbotron">
-        <img src="img/leap_device.png" style="float:right;"/>
-        <p class="lead">Interact with your Qt-based desktop applications following the
-        same idioms brought to you by phones and tablets.</p>
+        <img src="img/leap_device.png" style="float:right; margin-top: -20px;"/>
+        <p class="lead">
+          Interact with your Qt-based desktop applications following
+          the same idioms brought to you by phones and tablets.
+        </p>
       </div>
 
       <hr/> <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
-      <div class="row-fluid">
-        <p class="lead text-left">Qt Widgets</p>
-        <p class="blokk">
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Donec venenatis feugiat dictum. Nullam urna justo,
-          imperdiet at pulvinar porta, sollicitudin quis velit.
-        </p>
+      <div class="row-fluid" id="features">
+          <p class="lead text-left">Qt Gui</p>
+          <p>
+            The Gui module of Qt specializes core events to provide
+            interaction ones, such as mouse clicks or key
+            presses. Such events may be gestures events, such as pan,
+            swipe or pinch events. Many applications already implement
+            gesture event handling. The Gui layer of QLeap generates
+            such events so that existing applications handling Qt
+            Gestures can be controlled by the Leap Motion device
+            without additional work.
+          </p>
+
+          <div class="bs-docs-example">
+            Gesture events may be posted by the Leap
+            Motion device wrapper.
+          </div>
+     <pre class="prettyprint linenums" id="bs-docs-example">
+bool Object::event(QEvent *event)
+{
+    if (event->type() == QEvent::Gesture)
+        return gestureEvent(static_cast&lt;QGestureEvent*&gt;(event));
+      
+    return QObject::event(event);
+}         </pre>
+
+          <p>
+            However, the Leap Motion controller is up to 200 times
+            more accurate than any other gesture control system, and
+            also, is not restricted to a plane, gestures occur in a 3D
+            space. This means that using the Leap Motion device, one
+            can control an application with many more gestures than
+            the usual pan, pinch, swipe, tap and hold. Qt gui
+            provides, together with its gesture framework, a simple
+            way to generate custom gesture events by implementing
+            gesture recognizers. The Gui layer of QLeap provides new
+            gestures.
+          </p>
+
+          <div class="bs-docs-example">
+            Handling of both standard and custom gestures.
+          </div>
+          <pre class="prettyprint linenums" id="bs-docs-example">
+bool Object::gestureEvent(QGestureEvent *event)
+{
+    if (QGesture *gesture = event->gesture(Qt::SwipeGesture))
+	return panGesture(static_cast&lt;QPanGesture *&gt;(gesture));
+    
+    if (QGesture *gesture = event->gesture(QLeap::CircleGesture))
+        return circleGesture(static_cast&lt;QLeapCircleGesture *&gt;(gesture));
+
+    return true;
+}</pre>
+
       </div>
 
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
       <div class="row-fluid">
-        <p class="lead text-right">Qt Quick</p>
+        <p class="lead" style="text-align:right;">Qt Quick</p>
         <p class="blokk">
           Lorem ipsum dolor sit amet, consectetur adipiscing
           elit. Praesent suscipit convallis dui ut volutpat. Aenean
@@ -88,7 +140,7 @@
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
       
       <div class="row-fluid">
-        <p class="lead text-left">Qt Gestures</p>
+        <p class="lead text-left">Qt Widgets</p>
         <p class="blokk">
           Lorem ipsum dolor sit amet, consectetur adipiscing
           elit. Praesent suscipit convallis dui ut volutpat. Aenean
@@ -100,26 +152,21 @@
 
       <a id="about" class="hide-text">#</a>
 
-      <div class="row-fluid">
-        <div class="span9">
-          <div class="well well-transparent">
-            <p class="blokk">
-              Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit. Donec venenatis feugiat dictum. Nullam urna justo,
-              imperdiet at pulvinar porta, sollicitudin quis
-              velit.
-            </p>
-          </div>
-        </div>
+      <!-- <div class="row-fluid"> -->
+      <!--   <div class="span9"> -->
+      <!--     <div class="well well-transparent"> -->
+      <!--       <p align="justify"> -->
+      <!--         Julien Wintz received his PhD in algebraic geometry in 2008, and became a research engineer at INRIA Sophia-Antipolis the same year. He has designed dtk, a meta platform for modular scientific application development, for which he got, in 2011, Inria prize for supporting research and innovation. -->
+      <!--       </p> -->
+      <!--     </div> -->
+      <!--   </div> -->
 
-        <div class="span3">
-          <div class="well well-transparent">
-            <p class="blokk">
-              Lorem ipsum dolor sit amet, consectetur.
-            </p>
-          </div>
-        </div>
-      </div>
+      <!--   <div class="span3"> -->
+      <!--     <div class="gravatar"> -->
+      <!--       <img src="http://www.gravatar.com/avatar/d589a6e8d19a7120c22f0d15f1253f98?s=148"/> -->
+      <!--     </div> -->
+      <!--   </div> -->
+      <!-- </div> -->
 
       <hr/> <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
@@ -156,6 +203,7 @@
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/prettify.js"></script>
     <script>
     !function ($) {
         
