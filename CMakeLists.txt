@@ -3,9 +3,9 @@
 ## Author: Julien Wintz
 ## Created: Thu Feb 21 11:07:54 2013 (+0100)
 ## Version: 
-## Last-Updated: Thu Feb 21 11:17:35 2013 (+0100)
+## Last-Updated: Thu Feb 21 13:35:42 2013 (+0100)
 ##           By: Julien Wintz
-##     Update #: 10
+##     Update #: 13
 ######################################################################
 ## 
 ### Change Log:
@@ -50,6 +50,8 @@ mark_as_advanced(CMAKE_OSX_ARCHITECTURES)
 mark_as_advanced(CMAKE_OSX_DEPLOYMENT_TARGET)
 mark_as_advanced(CMAKE_OSX_SYSROOT)
 
+enable_testing()
+
 ## #################################################################
 ## Dependencies - Qt
 ## #################################################################
@@ -57,6 +59,7 @@ mark_as_advanced(CMAKE_OSX_SYSROOT)
 find_package(Qt5Core    REQUIRED)
 find_package(Qt5Gui     REQUIRED)
 find_package(Qt5Quick   REQUIRED)
+find_package(Qt5Test    REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
@@ -82,3 +85,4 @@ include_directories(${CMAKE_SOURCE_DIR}/src/QLeapGui)
 ## #################################################################
 
 add_subdirectory(src)
+add_subdirectory(tst)
