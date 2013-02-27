@@ -10,6 +10,9 @@ introduces necessary features for the development of QLeap.
 
 ### Build and test
 
+Even though illustrated with ninja, Unix Makefiles or other generators
+can be used without problems.
+
     $ cd /path/to/qleap
     $ mkdir build
     $ cd build
