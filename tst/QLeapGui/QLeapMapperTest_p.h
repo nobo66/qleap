@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Thu Feb 21 14:47:21 2013 (+0100)
  * Version: 
- * Last-Updated: Thu Feb 21 15:12:35 2013 (+0100)
+ * Last-Updated: Fri Feb 22 15:58:39 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 12
+ *     Update #: 18
  */
 
 /* Change Log:
@@ -14,15 +14,19 @@
 
 #pragma once
 
-class QLeapMapperTestScreenHelper : public QObject
+class QLeapMapperTestScreenHelper : public QFrame
 {
     Q_OBJECT
+
+public:
+     QLeapMapperTestScreenHelper(void);
+    ~QLeapMapperTestScreenHelper(void);
 
 public:
     int exec(void);
 
 signals:
-    void done(void);
+    void hit(void);
 
 public:
     bool event(QEvent *event);
