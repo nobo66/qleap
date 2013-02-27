@@ -1,4 +1,4 @@
-# qleap
+# QLeap
 
 Qt bindings for leap motion device. More info at [QLeap's homepage](http://jwintz.github.com/qleap).
 
