@@ -4,7 +4,7 @@ Qt bindings for leap motion device. More info at [QLeap's homepage](http://jwint
 
 ### Caveats
 
-Qt 5.0.0 does not fully supports gestures, especially on mac. The
+Qt 5.0.0 does not fully supports gesture, especially on mac. The
 current implementation somehow fixes that, but Qt 5.1.0 will
 introduces necessary features for the development of QLeap.
 
