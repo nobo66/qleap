@@ -1,17 +1,11 @@
 # QLeap
 
-Qt bindings for leap motion device. More info at [QLeap's homepage](http://jwintz.github.com/qleap).
-
-### Caveats
-
-Qt 5.0.0 does not fully supports gesture, especially on mac. The
-current implementation somehow fixes that, but Qt 5.1.0 will
-introduces necessary features for the development of QLeap.
+Qt bindings for leap motion device. More info at QLeap's [homepage](http://jwintz.github.com/qleap).
 
 ### Build and test
 
-Even though illustrated with ninja, Unix Makefiles or other generators
-can be used without problems.
+Even though illustrated with ninja, Unix Makefiles or other
+generators can be used without any problem.
 
     $ cd /path/to/qleap
     $ mkdir build
@@ -20,7 +14,17 @@ can be used without problems.
     $ ninja
     $ ninja test
 
-### Current features
+### Done
 
-- QLeapMapper maps to screen, scene and space (respectively for
-  QtWidgets, QtDeclarative and raw coordinates handling)
+- **[QLeapGui]** QLeapListener sends mouse events
+- **[QLeapGui]** QLeapListener sends touch events
+- **[QLeapGui]** QLeapMapper maps to space
+- **[QLeapGui]** QLeapMapper maps to scene
+- **[QLeapGui]** QLeapMapper maps to screen
+
+### Todo
+
+- **[QLeapWidgets]** QLeapGesture
+- **[QLeapWidgets]** QLeapGestureRecognizer
+- **[QLeapQuick]** QLeapArea
+- **[QLeapQuick]** QLeapQuickPlugin
