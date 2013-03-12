@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:35:45 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Thu Feb 21 14:44:36 2013 (+0100)
+ * Last-Updated: Tue Mar 12 12:53:01 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 155
+ *     Update #: 157
  */
 
 /* Commentary: 
@@ -78,4 +78,5 @@ private:
 void qleap_enable_touch_events(QWidget *widget);
 
 QPointF qleap_pointf(const Leap::Vector& position);
+
 Leap::Vector qleap_vector(const QPointF& position);

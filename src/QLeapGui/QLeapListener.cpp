@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 17:34:10 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Fri Jan 18 18:18:48 2013 (+0100)
+ * Last-Updated: Tue Mar 12 14:17:39 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 1117
+ *     Update #: 1158
  */
 
 /* Commentary: 
@@ -32,8 +32,10 @@
 
 QLeapListenerPrivate::QLeapListenerPrivate(void) : Leap::Listener()
 {
-    this->prev_event_type = QEvent::None;
-    this->curr_event_type = QEvent::None;
+    this->prev_touch_event_type = QEvent::None;
+    this->curr_touch_event_type = QEvent::None;
+    this->prev_mouse_event_type = QEvent::None;
+    this->curr_mouse_event_type = QEvent::None;
 
     this->prev_touch_count = 0;
     this->curr_touch_count = 0;
@@ -61,8 +63,11 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
     this->prev_touch_count = this->curr_touch_count;
     this->curr_touch_count = 0;
 
-    this->prev_event_type = this->curr_event_type;
-    this->curr_event_type = QEvent::None;
+    this->prev_touch_event_type = this->curr_touch_event_type;
+    this->curr_touch_event_type = QEvent::None;
+
+    this->prev_mouse_event_type = this->curr_touch_event_type;
+    this->curr_mouse_event_type = QEvent::None;
 
     QList<QTouchEvent::TouchPoint> points;
 
@@ -93,7 +98,7 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
                 point.setScreenPos(QLeapMapper::mapToScreen(position));
             }
 
-            if(this->prev_event_type == QEvent::TouchBegin || this->prev_event_type == QEvent::TouchUpdate) {
+            if(this->prev_touch_event_type == QEvent::TouchBegin || this->prev_touch_event_type == QEvent::TouchUpdate) {
                 QPointF position = qleap_pointf(screen.intersect(controller.frame(1).hands()[h].fingers()[f], true));
                 point.setLastPos(QLeapMapper::mapToSpace(position));
                 point.setLastScenePos(QLeapMapper::mapToScene(position));
@@ -106,56 +111,52 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 
     this->curr_touch_count = points.count();
 
-    ( curr_touch_count && !prev_touch_count) ? curr_event_type = QEvent::TouchBegin :
-    ( curr_touch_count &&  prev_touch_count) ? curr_event_type = QEvent::TouchUpdate :
-    (!curr_touch_count &&  prev_touch_count) ? curr_event_type = QEvent::TouchEnd :
-    (!curr_touch_count && !prev_touch_count) ? curr_event_type = QEvent::TouchCancel : curr_event_type = QEvent::None;
+    ( curr_touch_count && !prev_touch_count) ? curr_touch_event_type = QEvent::TouchBegin :
+    ( curr_touch_count &&  prev_touch_count) ? curr_touch_event_type = QEvent::TouchUpdate :
+    (!curr_touch_count &&  prev_touch_count) ? curr_touch_event_type = QEvent::TouchEnd :
+    (!curr_touch_count && !prev_touch_count) ? curr_touch_event_type = QEvent::TouchCancel : curr_touch_event_type = QEvent::None;
 
-    if(curr_event_type == QEvent::TouchUpdate && curr_touch_count && curr_touch_count != prev_touch_count) {
-        curr_event_type = QEvent::TouchEnd;
+    ( curr_touch_count &&  prev_touch_count) ? curr_mouse_event_type = QEvent::MouseMove : curr_mouse_event_type = QEvent::None;
+
+    if(curr_touch_event_type == QEvent::TouchUpdate && curr_touch_count && curr_touch_count != prev_touch_count) {
+        curr_touch_event_type = QEvent::TouchEnd;
+	curr_mouse_event_type = QEvent::None;
         points.clear();
         curr_touch_count = 0;
     }
 
-    Qt::TouchPointStates states = 0;
-    // states |= Qt::TouchPointPressed;
-    // states |= Qt::TouchPointMoved;
-    // states |= Qt::TouchPointStationary;
-    // states |= Qt::TouchPointReleased;
-
-    if((this->curr_event_type == QEvent::TouchEnd || this->curr_event_type == QEvent::TouchCancel) && this->start) {
+    if((this->curr_touch_event_type == QEvent::TouchEnd || this->curr_touch_event_type == QEvent::TouchCancel) && this->start) {
         delete this->start;
         this->start = NULL;
     }
 
-    if (this->curr_event_type == QEvent::TouchBegin) {
+    if (this->curr_touch_event_type == QEvent::TouchBegin) {
         this->start = new Leap::Frame(controller.frame());
     }
 
-// /////////////////////////////////////////////////////////////////
-// Debug pan gesture
-// /////////////////////////////////////////////////////////////////
-#if 0
-    if (this->curr_event_type == QEvent::TouchUpdate && points.count() == 2) {
+// ///////////////////////////////////////////////////////////////////
+// Sending mouse events
+// ///////////////////////////////////////////////////////////////////
 
-        QTouchEvent::TouchPoint p1 = points.at(0);
-        QTouchEvent::TouchPoint p2 = points.at(1);
-
-        QPointF offset = QPointF(
-            p1.pos().x() - p1.startPos().x() + p2.pos().x() - p2.startPos().x(),
-            p1.pos().y() - p1.startPos().y() + p2.pos().y() - p2.startPos().y()) / 2;
-
-        if (offset.x() >  10 || offset.y() >  10 || offset.x() < -10 || offset.y() < -10)
-            qDebug() << Q_FUNC_INFO << offset << "PanGesture TRIGGERABLE";
-        else
-            qDebug() << Q_FUNC_INFO << offset << "PanGesture untriggerable";
+    if(curr_mouse_event_type != QEvent::None) {
+	foreach(QObject *target, this->targets) {
+	    QWidget *widget = qobject_cast<QWidget *>(target);
+	    if(!widget)
+		continue;
+	    QTouchEvent::TouchPoint point = points.first();
+	    QCursor::setPos(point.screenPos().toPoint());
+	    if(widget->geometry().contains(point.screenPos().toPoint())) {
+		QCoreApplication::postEvent(widget, new QMouseEvent(this->curr_mouse_event_type, point.pos(), point.screenPos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
+	    }
+	}
     }
-#endif
-// /////////////////////////////////////////////////////////////////
 
+// ///////////////////////////////////////////////////////////////////
+// Sending touch event
+// ///////////////////////////////////////////////////////////////////
 
-    foreach(QObject *target, this->targets)
-        QCoreApplication::postEvent(target, new QTouchEvent(this->curr_event_type, qLeap, Qt::NoModifier, states, points));
+	foreach(QObject *target, this->targets)
+        QCoreApplication::postEvent(target, new QTouchEvent(this->curr_touch_event_type, qLeap, Qt::NoModifier, 0, points));
 }
 
 // /////////////////////////////////////////////////////////////////

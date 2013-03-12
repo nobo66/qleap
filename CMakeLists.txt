@@ -3,9 +3,9 @@
 ## Author: Julien Wintz
 ## Created: Thu Feb 21 11:07:54 2013 (+0100)
 ## Version: 
-## Last-Updated: Thu Feb 21 13:35:42 2013 (+0100)
+## Last-Updated: Tue Mar 12 12:59:56 2013 (+0100)
 ##           By: Julien Wintz
-##     Update #: 13
+##     Update #: 16
 ######################################################################
 ## 
 ### Change Log:
@@ -85,4 +85,5 @@ include_directories(${CMAKE_SOURCE_DIR}/src/QLeapGui)
 ## #################################################################
 
 add_subdirectory(src)
+add_subdirectory(exp)
 add_subdirectory(tst)

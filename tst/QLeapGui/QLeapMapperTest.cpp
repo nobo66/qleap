@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Thu Feb 21 13:41:59 2013 (+0100)
  * Version: 
- * Last-Updated: Fri Feb 22 16:19:48 2013 (+0100)
+ * Last-Updated: Tue Mar 12 12:57:56 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 200
+ *     Update #: 202
  */
 
 /* Change Log:
@@ -38,12 +38,12 @@ void QLeapMapperTestCase::testMapToScreen(void)
 
     qsrand(QTime::currentTime().msec());
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 20; i++) {
 
 	QDesktopWidget desktop;
 
 	QLeapMapperTestScreenHelper helper;
-	helper.move(qrand() % desktop.screenGeometry().width(),
+	helper.move(qrand() % desktop.screenGeometry().width() - 200,
 		    qrand() % desktop.screenGeometry().height() - 200);
 	helper.show();
 	helper.raise();
