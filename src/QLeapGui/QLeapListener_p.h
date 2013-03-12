@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:11:50 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 13:11:39 2013 (+0100)
+ * Last-Updated: Tue Mar 12 19:24:44 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 75
+ *     Update #: 77
  */
 
 /* Commentary: 
@@ -37,6 +37,9 @@ public:
 
 public:
     QObjectList targets;
+
+public:
+    QTouchEvent::TouchPoint mouse_point;
 
 public:
     int curr_touch_count;

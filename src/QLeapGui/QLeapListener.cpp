@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 17:34:10 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 18:55:00 2013 (+0100)
+ * Last-Updated: Tue Mar 12 19:32:27 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 1181
+ *     Update #: 1215
  */
 
 /* Commentary: 
@@ -116,7 +116,9 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
     (!curr_touch_count &&  prev_touch_count) ? curr_touch_event_type = QEvent::TouchEnd :
     (!curr_touch_count && !prev_touch_count) ? curr_touch_event_type = QEvent::TouchCancel : curr_touch_event_type = QEvent::None;
 
-    ( curr_touch_count &&  prev_touch_count) ? curr_mouse_event_type = QEvent::MouseMove : curr_mouse_event_type = QEvent::None;
+    ( curr_touch_count && !prev_touch_count) ? curr_mouse_event_type = QEvent::MouseButtonPress :
+    ( curr_touch_count &&  prev_touch_count) ? curr_mouse_event_type = QEvent::MouseMove :
+    (!curr_touch_count &&  prev_touch_count) ? curr_mouse_event_type = QEvent::MouseButtonRelease : curr_mouse_event_type = QEvent::None;
 
     if(curr_touch_event_type == QEvent::TouchUpdate && curr_touch_count && curr_touch_count != prev_touch_count) {
         curr_touch_event_type = QEvent::TouchEnd;
@@ -134,14 +136,19 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
         this->start = new Leap::Frame(controller.frame());
     }
 
+    if(this->curr_mouse_event_type == QEvent::MouseButtonPress || this->curr_mouse_event_type == QEvent::MouseMove) {
+	this->mouse_point = points.first();
+    }
+
 // ///////////////////////////////////////////////////////////////////
 // Sending mouse events
 // ///////////////////////////////////////////////////////////////////
 
     if(curr_mouse_event_type != QEvent::None) {
+
 	foreach(QObject *target, this->targets) {
 
-	    QTouchEvent::TouchPoint point = points.first();
+	    QTouchEvent::TouchPoint point = this->mouse_point;
 	    QCursor::setPos(point.screenPos().toPoint());
 
 	    QWidget *widget = qobject_cast<QWidget *>(target);
@@ -152,9 +159,6 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 	    }
 
 	    if(window && window->geometry().contains(point.screenPos().toPoint())) {
-		
-		qDebug() << "Sending mouse event to window";
-
 		QCoreApplication::postEvent(window, new QMouseEvent(this->curr_mouse_event_type, point.pos(), point.screenPos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
 	    }
 	}
@@ -165,10 +169,15 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 // ///////////////////////////////////////////////////////////////////
 
     foreach(QObject *target, this->targets) {
+
 	QWidget *widget = qobject_cast<QWidget *>(target);
-	if(!widget)
-	    continue;
-        QCoreApplication::postEvent(target, new QTouchEvent(this->curr_touch_event_type, qLeap, Qt::NoModifier, 0, points));
+	QWindow *window = qobject_cast<QWindow *>(target);
+
+	if(widget)
+	    QCoreApplication::postEvent(target, new QTouchEvent(this->curr_touch_event_type, qLeap, Qt::NoModifier, 0, points));
+
+	if(window)
+	    QCoreApplication::postEvent(target, new QTouchEvent(this->curr_touch_event_type, qLeap, Qt::NoModifier, 0, points));
     }
 }
 

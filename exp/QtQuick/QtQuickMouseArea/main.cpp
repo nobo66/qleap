@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Tue Mar 12 17:56:36 2013 (+0100)
  * Version: 
- * Last-Updated: Tue Mar 12 18:49:31 2013 (+0100)
+ * Last-Updated: Tue Mar 12 19:17:16 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 30
+ *     Update #: 33
  */
 
 /* Change Log:
@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
     view.setTitle("QLeap quick mouse area example");
     view.show();
     view.raise();
-
-    view.setMouseGrabEnabled(true);
 
     qLeap->addTarget(&view);
 
