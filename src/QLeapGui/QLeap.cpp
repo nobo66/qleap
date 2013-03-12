@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:37:27 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 19:00:28 2013 (+0100)
+ * Last-Updated: Wed Mar 13 00:21:47 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 168
+ *     Update #: 169
  */
 
 /* Commentary: 
@@ -117,7 +117,7 @@ QLeap::~QLeap(void)
 // /////////////////////////////////////////////////////////////////
 
 #if !defined(Q_OS_MAC)
-void qleap_enable_touch_events_on_mac(QWidget *widget)
+void qleap_enable_touch_events(QWidget *widget)
 {
     widget->setAttribute(Qt::WA_AcceptTouchEvents, true);
 }
