@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:35:45 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 18:56:26 2013 (+0100)
+ * Last-Updated: Wed Mar 13 00:33:06 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 164
+ *     Update #: 175
  */
 
 /* Commentary: 
@@ -23,8 +23,6 @@
 
 #include <QtCore>
 #include <QtGui>
-
-#include <Leap.h>
 
 // /////////////////////////////////////////////////////////////////
 // Helper macros
@@ -80,7 +78,3 @@ private:
 // /////////////////////////////////////////////////////////////////
 
 void qleap_enable_touch_events(QWidget *widget);
-
-QPointF qleap_pointf(const Leap::Vector& position);
-
-Leap::Vector qleap_vector(const QPointF& position);

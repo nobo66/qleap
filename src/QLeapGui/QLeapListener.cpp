@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 17:34:10 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 19:32:27 2013 (+0100)
+ * Last-Updated: Wed Mar 13 00:29:12 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 1215
+ *     Update #: 1221
  */
 
 /* Commentary: 
@@ -25,6 +25,17 @@
 #include <QtCore>
 #include <QtDebug>
 #include <QtWidgets>
+
+#include <Leap.h>
+
+// ///////////////////////////////////////////////////////////////////
+// Helper functions
+// ///////////////////////////////////////////////////////////////////
+
+QPointF qleap_pointf(const Leap::Vector& position)
+{
+    return QPointF(position.x, position.y);
+}
 
 // /////////////////////////////////////////////////////////////////
 // QLeapListenerPrivate

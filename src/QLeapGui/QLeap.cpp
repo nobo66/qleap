@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:37:27 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Wed Mar 13 00:21:47 2013 (+0100)
+ * Last-Updated: Wed Mar 13 00:31:27 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 169
+ *     Update #: 174
  */
 
 /* Commentary: 
@@ -23,6 +23,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <QtWidgets>
 
 // /////////////////////////////////////////////////////////////////
 // QLeapPrivate
@@ -87,6 +88,9 @@ void QLeap::addTarget(QObject *object)
 {
     d->listener->addTarget(object);
 
+    if(QWidget *widget = qobject_cast<QWidget *>(object))
+	qleap_enable_touch_events(widget);
+
     connect(object, SIGNAL(destroyed(QObject *)), this, SLOT(removeTarget(QObject *)));
 }
 
@@ -122,13 +126,3 @@ void qleap_enable_touch_events(QWidget *widget)
     widget->setAttribute(Qt::WA_AcceptTouchEvents, true);
 }
 #endif
-
-QPointF qleap_pointf(const Leap::Vector& position)
-{
-    return QPointF(position.x, position.y);
-}
-
-Leap::Vector qleap_vector(const QPointF& position)
-{
-    return Leap::Vector(position.x(), position.y(), 0.0);
-}
