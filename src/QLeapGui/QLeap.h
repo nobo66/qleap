@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:35:45 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 12:53:01 2013 (+0100)
+ * Last-Updated: Tue Mar 12 18:56:26 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 157
+ *     Update #: 164
  */
 
 /* Commentary: 
@@ -40,8 +40,10 @@ class QLeapController;
 class QLeapListener;
 class QLeapPrivate;
 
-class QLeap : public QTouchDevice
+class QLeap : public QObject, public QTouchDevice
 {
+    Q_OBJECT
+
 public:
     static QLeap *instance(void);
 
@@ -61,7 +63,9 @@ public:
 #pragma mark -
 #pragma mark Target management
 
-    void addTarget(QObject *object);
+public slots:
+    void    addTarget(QObject *object);
+    void removeTarget(QObject *object);
 
 protected:
      QLeap(void);

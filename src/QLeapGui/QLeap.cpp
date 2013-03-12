@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 18:37:27 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 14:18:05 2013 (+0100)
+ * Last-Updated: Tue Mar 12 19:00:28 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 160
+ *     Update #: 168
  */
 
 /* Commentary: 
@@ -86,6 +86,13 @@ QString QLeap::name(void) const
 void QLeap::addTarget(QObject *object)
 {
     d->listener->addTarget(object);
+
+    connect(object, SIGNAL(destroyed(QObject *)), this, SLOT(removeTarget(QObject *)));
+}
+
+void QLeap::removeTarget(QObject *object)
+{
+    d->listener->removeTarget(object);
 }
 
 QLeap::QLeap(void) : QTouchDevice(), d(new QLeapPrivate)

@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 17:34:10 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Tue Mar 12 14:17:39 2013 (+0100)
+ * Last-Updated: Tue Mar 12 18:55:00 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 1158
+ *     Update #: 1181
  */
 
 /* Commentary: 
@@ -86,23 +86,23 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 
             if(this->start) {
                 QPointF position = qleap_pointf(screen.intersect(this->start->hands()[h].fingers()[f], true));
-                point.setStartPos(QLeapMapper::mapToSpace(position));
-                point.setStartScenePos(QLeapMapper::mapToScene(position));
-                point.setStartScreenPos(QLeapMapper::mapToScreen(position));
+                point.setStartPos(QLeapMapper::mapToSpace(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setStartScenePos(QLeapMapper::mapToScene(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setStartScreenPos(QLeapMapper::mapToScreen(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
 
             if(true) {
                 QPointF position = qleap_pointf(screen.intersect(finger, true));
-                point.setPos(QLeapMapper::mapToSpace(position));
-                point.setScenePos(QLeapMapper::mapToScene(position));
-                point.setScreenPos(QLeapMapper::mapToScreen(position));
+                point.setPos(QLeapMapper::mapToSpace(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setScenePos(QLeapMapper::mapToScene(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setScreenPos(QLeapMapper::mapToScreen(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
 
             if(this->prev_touch_event_type == QEvent::TouchBegin || this->prev_touch_event_type == QEvent::TouchUpdate) {
                 QPointF position = qleap_pointf(screen.intersect(controller.frame(1).hands()[h].fingers()[f], true));
-                point.setLastPos(QLeapMapper::mapToSpace(position));
-                point.setLastScenePos(QLeapMapper::mapToScene(position));
-                point.setLastScreenPos(QLeapMapper::mapToScreen(position));
+                point.setLastPos(QLeapMapper::mapToSpace(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setLastScenePos(QLeapMapper::mapToScene(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setLastScreenPos(QLeapMapper::mapToScreen(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
 
             points << point;
@@ -140,13 +140,22 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 
     if(curr_mouse_event_type != QEvent::None) {
 	foreach(QObject *target, this->targets) {
-	    QWidget *widget = qobject_cast<QWidget *>(target);
-	    if(!widget)
-		continue;
+
 	    QTouchEvent::TouchPoint point = points.first();
 	    QCursor::setPos(point.screenPos().toPoint());
-	    if(widget->geometry().contains(point.screenPos().toPoint())) {
+
+	    QWidget *widget = qobject_cast<QWidget *>(target);
+	    QWindow *window = qobject_cast<QWindow *>(target);
+	    
+	    if(widget && widget->geometry().contains(point.screenPos().toPoint())) {
 		QCoreApplication::postEvent(widget, new QMouseEvent(this->curr_mouse_event_type, point.pos(), point.screenPos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
+	    }
+
+	    if(window && window->geometry().contains(point.screenPos().toPoint())) {
+		
+		qDebug() << "Sending mouse event to window";
+
+		QCoreApplication::postEvent(window, new QMouseEvent(this->curr_mouse_event_type, point.pos(), point.screenPos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
 	    }
 	}
     }
@@ -155,8 +164,12 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 // Sending touch event
 // ///////////////////////////////////////////////////////////////////
 
-	foreach(QObject *target, this->targets)
+    foreach(QObject *target, this->targets) {
+	QWidget *widget = qobject_cast<QWidget *>(target);
+	if(!widget)
+	    continue;
         QCoreApplication::postEvent(target, new QTouchEvent(this->curr_touch_event_type, qLeap, Qt::NoModifier, 0, points));
+    }
 }
 
 // /////////////////////////////////////////////////////////////////
@@ -179,4 +192,10 @@ void QLeapListener::addTarget(QObject *target)
 {
     if(target && !d->targets.contains(target))
         d->targets << target;
+}
+
+void QLeapListener::removeTarget(QObject *target)
+{
+    if(target && d->targets.contains(target))
+        d->targets.removeAll(target);
 }
