@@ -3,9 +3,9 @@
  * Author: Julien Wintz
  * Created: Thu Feb 21 13:41:59 2013 (+0100)
  * Version: 
- * Last-Updated: Wed Mar 13 11:36:09 2013 (+0100)
+ * Last-Updated: Wed Mar 13 12:44:51 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 203
+ *     Update #: 210
  */
 
 /* Change Log:
@@ -48,9 +48,6 @@ void QLeapMapperTestCase::testMapToScreen(void)
 	helper.show();
 	helper.raise();
 	
-#if defined(Q_OS_MAC)
-	qleap_enable_touch_events(&helper);
-#endif
 	qLeap->addTarget(&helper);
     
 	status += helper.exec();
@@ -100,7 +97,7 @@ QLeapMapperTestScreenHelper::QLeapMapperTestScreenHelper(void)
     QLabel *label = new QLabel("Touch me", this);
     label->setFont(font);
     label->setAlignment(Qt::AlignCenter);
-    label->setStyleSheet("color: white;");
+    label->setStyleSheet("background: #cccccc; color: #666666; padding: 20px;");
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -150,7 +147,7 @@ bool QLeapMapperTestScreenHelper::event(QEvent *event)
 	if (QTouchEvent *touch = static_cast<QTouchEvent *>(event)) {
 	    QTouchEvent::TouchPoint point = touch->touchPoints().first();
 
-	    QCursor::setPos(point.screenPos().toPoint());
+	    qDebug() << Q_FUNC_INFO << point.screenPos() << this->geometry();
 
 	    if(this->geometry().contains(point.screenPos().toPoint()))
 		emit hit();
