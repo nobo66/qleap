@@ -4,9 +4,9 @@
  * Copyright (C) 2008-2011 - Julien Wintz, Inria.
  * Created: Tue Dec 18 17:34:10 2012 (+0100)
  * Version: $Id$
- * Last-Updated: Wed Mar 13 01:20:30 2013 (+0100)
+ * Last-Updated: Wed Mar 13 12:37:48 2013 (+0100)
  *           By: Julien Wintz
- *     Update #: 1322
+ *     Update #: 1325
  */
 
 /* Commentary: 
@@ -113,23 +113,20 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 
             if(this->start) {
                 QPointF position = qleap_pointf(screen.intersect(this->start->hands()[h].fingers()[f], true));
-                point.setStartPos(QLeapMapper::mapToSpace(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
-                point.setStartScenePos(QLeapMapper::mapToScene(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
-                point.setStartScreenPos(QLeapMapper::mapToScreen(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setStartPos(QLeapMapper::mapToLocal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setStartScreenPos(QLeapMapper::mapToGlobal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
 
             if(true) {
                 QPointF position = qleap_pointf(screen.intersect(finger, true));
-                point.setPos(QLeapMapper::mapToSpace(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
-                point.setScenePos(QLeapMapper::mapToScene(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
-                point.setScreenPos(QLeapMapper::mapToScreen(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setPos(QLeapMapper::mapToLocal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setScreenPos(QLeapMapper::mapToGlobal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
 
             if(this->prev_touch_event_type == QEvent::TouchBegin || this->prev_touch_event_type == QEvent::TouchUpdate) {
                 QPointF position = qleap_pointf(screen.intersect(controller.frame(1).hands()[h].fingers()[f], true));
-                point.setLastPos(QLeapMapper::mapToSpace(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
-                point.setLastScenePos(QLeapMapper::mapToScene(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
-                point.setLastScreenPos(QLeapMapper::mapToScreen(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setLastPos(QLeapMapper::mapToLocal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
+                point.setLastScreenPos(QLeapMapper::mapToGlobal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
 
             points << point;
