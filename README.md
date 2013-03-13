@@ -16,14 +16,17 @@ generators can be used without any problem.
 
 ### Done
 
-- **[QLeapGui]** QLeapListener sends mouse events
-- **[QLeapGui]** QLeapListener sends touch events
-- **[QLeapGui]** QLeapMapper maps to space
-- **[QLeapGui]** QLeapMapper maps to scene
-- **[QLeapGui]** QLeapMapper maps to screen
+- **[QLeapGui]** QLeapListener: sends mouse events
+- **[QLeapGui]** QLeapListener: sends touch events
+- **[QLeapGui]** QLeapMapper: maps to space
+- **[QLeapGui]** QLeapMapper: maps to scene
+- **[QLeapGui]** QLeapMapper: maps to screen
 
 ### Todo
 
+- **[QLeapGui]** QLeapListener: set touch points (pen) flag for tool usage
+- **[QLeapGui]** QLeapListener: set custom cursor for widget|window targets
+- **[QLeapGui]** QLeapListener: send events on two points
 - **[QLeapWidgets]** QLeapGesture
 - **[QLeapWidgets]** QLeapGestureRecognizer
 - **[QLeapQuick]** QLeapArea
