@@ -98,6 +98,7 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
 
     QList<QTouchEvent::TouchPoint> points;
 
+#if 0
     const Leap::Screen screen = controller.calibratedScreens()[0];
     const Leap::HandList hands = controller.frame().hands();
 
@@ -128,10 +129,10 @@ void QLeapListenerPrivate::onFrame(const Leap::Controller& controller)
                 point.setLastPos(QLeapMapper::mapToLocal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
                 point.setLastScreenPos(QLeapMapper::mapToGlobal(position, QRectF(0, 0, screen.widthPixels(), screen.heightPixels())));
             }
-
             points << point;
         }
     }
+#endif
 
     this->curr_touch_count = points.count();
 
