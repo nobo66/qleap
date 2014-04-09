@@ -26,9 +26,18 @@
 #else
 #  ifndef QLEAPGUI_EXPORT
 #    ifdef QLeapGui_EXPORTS
-#      define QLEAPGUI_EXPORT __attribute__((visibility("default")))
+// http://gcc.gnu.org/wiki/Visibility
+#      ifdef __GNUC__
+#        define QLEAPGUI_EXPORT __attribute__((visibility("default")))
+#      else
+#        define QLEAPGUI_EXPORT __declspec(dllexport)
+#      endif
 #    else
-#      define QLEAPGUI_EXPORT __attribute__((visibility("default")))
+#      ifdef __GNUC__
+#        define QLEAPGUI_EXPORT __attribute__((visibility("default")))
+#      else
+#        define QLEAPGUI_EXPORT __declspec(dllexport)
+#      endif
 #    endif
 #  endif
 
