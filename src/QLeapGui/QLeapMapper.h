@@ -24,9 +24,18 @@
 #include <QtCore/QPoint>
 #include <QtCore/QPointF>
 
+#ifdef Q_OS_WIN
+class QLEAPGUI_EXPORT QLeapMapper
+#else
 class QLeapMapper
+#endif
 {
 public:
+#ifdef Q_OS_WIN
+    static const QPointF mapToLocal(const QPointF& point, const QRectF& screen);
+    static const QPointF mapToGlobal(const QPointF& point, const QRectF& screen);
+#else
     QLEAPGUI_EXPORT static const QPointF mapToLocal(const QPointF& point, const QRectF& screen);
     QLEAPGUI_EXPORT static const QPointF mapToGlobal(const QPointF& point, const QRectF& screen);
+#endif
 };

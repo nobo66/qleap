@@ -36,7 +36,7 @@
 #      ifdef __GNUC__
 #        define QLEAPGUI_EXPORT __attribute__((visibility("default")))
 #      else
-#        define QLEAPGUI_EXPORT __declspec(dllexport)
+#        define QLEAPGUI_EXPORT __declspec(dllimport)
 #      endif
 #    endif
 #  endif
