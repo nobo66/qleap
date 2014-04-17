@@ -17,8 +17,10 @@
 #  LEAP_LIBRARIES - The libraries needed to use Leap
 
 find_path(LEAP_INCLUDE_DIR Leap.h /usr/include/
+$ENV{HOME}/LeapDeveloperKit/LeapSDK/include
 C:/Users/Murakami/LeapDeveloperKit/LeapSDK/include)
 find_library(LEAP_LIBRARY Leap PATHS /usr/lib
+$ENV{HOME}/LeapDeveloperKit/LeapSDK/lib/x64
 C:/Users/Murakami/LeapDeveloperKit/LeapSDK/lib/x86)
 
 set(LEAP_INCLUDE_DIRS ${LEAP_INCLUDE_DIR})
