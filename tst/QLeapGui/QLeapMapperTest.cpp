@@ -71,7 +71,7 @@ void QLeapMapperTestCase::cleanupTestCase(void)
 // ///////////////////////////////////////////////////////////////////
 
 #define QLEAP_TEST_MAIN(TestMain, TestObject)	\
-    int TestMain(int argc, char **argv)		\
+    int TestMain(int argc, char *argv[])		\
     {						\
         QApplication app(argc, argv);		\
         TestObject tc;				\
