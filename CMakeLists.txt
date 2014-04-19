@@ -38,11 +38,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 ## 
 ## #################################################################
 
-if(NOT APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-else(NOT APPLE)
+if(UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
-endif(NOT APPLE)
+elseif(WIN32)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+else(UNIX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas")
+endif(UNIX)
 
 mark_as_advanced(CMAKE_BUILD_TYPE)
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
