@@ -16,8 +16,12 @@
 #  LEAP_INCLUDE_DIRS - The Leap include directories
 #  LEAP_LIBRARIES - The libraries needed to use Leap
 
-find_path(LEAP_INCLUDE_DIR include/Leap.h /usr/include/)
-find_library(LEAP_LIBRARY Leap PATHS /usr/lib)
+find_path(LEAP_INCLUDE_DIR Leap.h /usr/include/
+$ENV{HOME}/LeapDeveloperKit/LeapSDK/include
+$ENV{HOMEDRIVE}$ENV{HOMEPATH}/LeapDeveloperKit/LeapSDK/include)
+find_library(LEAP_LIBRARY Leap PATHS /usr/lib
+$ENV{HOME}/LeapDeveloperKit/LeapSDK/lib
+$ENV{HOMEDRIVE}$ENV{HOMEPATH}/LeapDeveloperKit/LeapSDK/lib/x86)
 
 set(LEAP_INCLUDE_DIRS ${LEAP_INCLUDE_DIR})
 set(LEAP_LIBRARIES ${LEAP_LIBRARY})
