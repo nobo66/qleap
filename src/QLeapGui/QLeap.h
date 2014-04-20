@@ -38,7 +38,11 @@ class QLeapController;
 class QLeapListener;
 class QLeapPrivate;
 
+#ifdef Q_OS_WIN
+class QLEAPGUI_EXPORT QLeap : public QObject, public QTouchDevice
+#else
 class QLeap : public QObject, public QTouchDevice
+#endif
 {
     Q_OBJECT
 
